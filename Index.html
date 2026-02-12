@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>For You ❤️</title>
+<link rel="icon" type="image/jpg" href="favicon.jpg">
+
+<style>
+body {
+  margin: 0;
+  background: black;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  font-family: sans-serif;
+}
+
+.scene {
+  position: absolute;
+  width: 1100px;   /* bigger base size */
+  height: 800px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 1.2s ease;
+  cursor: pointer;
+  
+}
+
+
+/* Make all images bigger */
+.scene img {
+  position: absolute;
+  width: 125%;   /* 25% bigger */
+  max-width: none;
+}
+
+
+/* Closed envelope */
+.closed-envelope {
+  z-index: 5;
+  transition: opacity 0.6s ease;
+}
+
+/* Open back */
+.open-envelope {
+  opacity: 0;
+  z-index: 1;
+  transition: opacity 0.6s ease;
+}
+
+/* Note */
+.note {
+  position: absolute;
+  width: 70%;
+  top: 40%;              /* start slightly lower */
+  transform: translateY(-300px);
+  opacity: 0;
+  z-index: 2;
+  transition: transform 0.9s ease, opacity 0.8s ease;
+}
+
+
+/* Front cover mask */
+.envelope-front {
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* Animation states */
+.scene.active .closed-envelope {
+  opacity: 0;
+}
+
+.scene.active .open-envelope {
+  opacity: 1;
+}
+
+.scene.active .note {
+  opacity: 1;
+  transform: translateY(-600px);   /* pulls it fully out */
+}
+
+/* Move whole envelope slightly downward before zoom */
+.scene.shift {
+  transform: translateY(300px);
+}
+
+/* Zoom */
+.scene.zoom {
+  transform: translateY(625px) scale(2.3);
+}
+
+.circle-ring {
+  position: absolute;
+  width: 1000px;
+  height: 1000px;
+  z-index: 0;
+  animation: spin 30s linear infinite;
+  pointer-events: none;
+
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+
+</style>
+</head>
+
+<body>
+
+<div class="scene" id="scene">
+
+  <img src="Textring.svg" class="circle-ring" />
+  
+  <img src="closed.png" class="closed-envelope" />
+  
+  <img src="open.png" class="open-envelope" />
+  
+  <img src="Note.png" class="note" />
+  
+  <img src="Front.png" class="envelope-front" />
+</div>
+
+
+<script>
+const scene = document.getElementById("scene");
+
+scene.addEventListener("click", () => {
+
+  scene.classList.add("active");
+
+  setTimeout(() => {
+    scene.classList.add("shift");
+  }, 700);
+
+  setTimeout(() => {
+    scene.classList.add("zoom");
+  }, 1400);
+
+});
+</script>
+
+
+</body>
+</html>
